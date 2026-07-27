@@ -1,0 +1,43 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    activate server
+    server-->>browser: HTML document
+    deactivate server
+
+    Note right of browser: the browser sends the new note to the database and redirects the request after refresh
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate server
+    server-->>browser: HTML document
+    deactivate server
+
+    Note right of browser: the browser loads the page's HTML
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server-->>browser: css file
+    deactivate server
+
+    Note right of browser: the browser executes the CSS file to change the page's appearance
+    
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate server
+    server-->>browser: JS file
+    deactivate server
+
+    Note right of browser: the browser executes the javascript file
+
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: [{"content": "asd","date":"2026-07-22T14:45:35.387Z"}, … ]
+    deactivate server
+
+    Note right of browser: the browser gets all the notes in json file and executes the callback function to render them on the page
+
+    
+
+    
