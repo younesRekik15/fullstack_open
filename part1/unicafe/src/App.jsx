@@ -26,9 +26,12 @@ const App = () => {
       <Button onClick={()=>{setBad(bad + 1)}} text = 'bad'/>
       <h1>statistics</h1>
 
-      <Stat text='good' value={good}/>
-      <Stat text='neutral' value={neutral}/>
-      <Stat text='bad' value={bad}/>
+      <Stat text='good' value = {good}/>
+      <Stat text='neutral' value = {neutral}/>
+      <Stat text='bad' value = {bad}/>
+      <Stat text='all' value = {good + neutral + bad} />
+      <Stat text='average' value = {(good - bad)/(good + neutral + bad) } />
+      <Stat text = 'positive' value = {(good * 100) / (good + neutral + bad)} />
 
     </div>
   )
