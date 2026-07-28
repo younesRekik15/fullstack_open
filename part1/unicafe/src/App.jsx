@@ -15,16 +15,22 @@ const Stat = ({text, value}) =>{
 }
 
 const Statistics = (props) => {
-  return(
-    <>
-      <Stat text='good' value = {props.good}/>
-      <Stat text='neutral' value = {props.neutral}/>
-      <Stat text='bad' value = {props.bad}/>
-      <Stat text='all' value = {props.all} />
-      <Stat text='average' value = { props.average } />
-      <Stat text = 'positive' value = {props.positive} />    
-    </>
-  )
+  if(props.good == 0 && props.bad == 0 && props.neutral == 0){
+    return(
+      <p>No feedback given</p>
+    )
+  }else{
+    return(
+      <>
+        <Stat text='good' value = {props.good}/>
+        <Stat text='neutral' value = {props.neutral}/>
+        <Stat text='bad' value = {props.bad}/>
+        <Stat text='all' value = {props.all} />
+        <Stat text='average' value = { props.average } />
+        <Stat text = 'positive' value = {props.positive} />    
+      </>
+    )
+  }
 }
 
 const App = () => {
