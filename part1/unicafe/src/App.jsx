@@ -6,7 +6,7 @@ const Button = ({onClick, text}) =>{
   )
 }
 
-const Stat = ({text, value}) =>{
+const StatisticLine = ({text, value}) =>{
   
       return (
         <p>{text} {value}{text=='positive'?'%':''}</p>
@@ -22,12 +22,12 @@ const Statistics = (props) => {
   }else{
     return(
       <>
-        <Stat text='good' value = {props.good}/>
-        <Stat text='neutral' value = {props.neutral}/>
-        <Stat text='bad' value = {props.bad}/>
-        <Stat text='all' value = {props.all} />
-        <Stat text='average' value = { props.average } />
-        <Stat text = 'positive' value = {props.positive} />    
+        <StatisticLine text='good' value = {props.good}/>
+        <StatisticLine text='neutral' value = {props.neutral}/>
+        <StatisticLine text='bad' value = {props.bad}/>
+        <StatisticLine text='all' value = {props.all} />
+        <StatisticLine text='average' value = { props.average } />
+        <StatisticLine text = 'positive' value = {props.positive} />    
       </>
     )
   }
