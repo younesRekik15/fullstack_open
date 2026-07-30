@@ -1,5 +1,41 @@
 import { useState } from 'react'
 
+const Filter = ({value, onChange}) => {
+  return(
+    <div>
+        filter shown with <input value = {value} onChange={onChange} />
+    </div>
+  )
+}
+
+const PersonForm = ({onSubmit, nameValue, nameOnChange, numberValue, numberOnChange}) => {
+  return(
+    <form onSubmit={onSubmit}>
+      <div>
+        name: <input value = {nameValue} onChange={nameOnChange}/>
+      </div>
+      <div>
+        number: <input value = {numberValue} onChange={numberOnChange}/>
+      </div>
+      <div>
+        <button type="submit">add</button>
+      </div>
+    </form>
+  )
+}
+
+const Persons = ({searchValue, persons}) => {
+  return(
+    <>{
+      persons.filter(
+        person =>person.name.toLowerCase().includes(searchValue)
+      ).map(
+          person => <p key={person.id}>{person.name} {person.number}</p>
+      )
+    }</>
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456', id: 1 },
@@ -41,30 +77,22 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        filter shown with <input value = {searchValue} onChange={handleSearchValueChange} />
-      </div>
 
-      <h2>add a new</h2>
-      <form onSubmit={addNewPerson}>
-        <div>
-          name: <input value = {newName} onChange={handleNewNameChange}/>
-        </div>
-        <div>
-          number: <input value = {newNumber} onChange={handleNewNumberChange}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      {
-        persons.filter(
-          person =>person.name.toLowerCase().includes(searchValue)
-        ).map(
-            person => <p key={person.id}>{person.name} {person.number}</p>
-        )
-      }
+      <Filter value={searchValue} onChange={handleSearchValueChange} />
+
+      <h3>add a new</h3>
+
+      <PersonForm 
+        onSubmit={addNewPerson}
+        nameValue={newName}
+        numberValue={newNumber}
+        nameOnChange={handleNewNameChange}
+        numberOnChange={handleNewNumberChange}
+      />
+
+      <h3>Numbers</h3>
+
+      <Persons searchValue ={searchValue} persons ={persons} />
     </div>
   )
 }
