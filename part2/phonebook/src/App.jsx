@@ -25,13 +25,23 @@ const PersonForm = ({onSubmit, nameValue, nameOnChange, numberValue, numberOnCha
   )
 }
 
-const Persons = ({searchValue, persons}) => {
+const Persons = ({searchValue, persons, removePerson}) => {
   return(
     <>{
       persons.filter(
         person =>person.name.toLowerCase().includes(searchValue)
       ).map(
-          person => <p key={person.id}>{person.name} {person.number}</p>
+          person => {
+            return(
+              <div key={person.id}>
+                {person.name} {person.number} 
+                <button onClick={()=>{
+                  removePerson(person)
+                }}>
+                  delete
+                </button>
+              </div>
+            )}
       )
     }</>
   )
@@ -82,6 +92,17 @@ const App = () => {
     // setPersons(persons.concat({name:newName,number:newNumber}))
   }
 
+  const removePerson = (person) => {
+    if(confirm(`Delete ${person.name} ?`)){
+      personService
+      .remove(person.id)
+      .then( () =>{
+        setPersons(persons.filter(filteredPerson => filteredPerson.id !== person.id))
+        console.log(persons)
+      })
+    }
+  }
+
 
   return (
     <div>
@@ -101,7 +122,7 @@ const App = () => {
 
       <h3>Numbers</h3>
 
-      <Persons searchValue ={searchValue} persons ={persons} />
+      <Persons searchValue ={searchValue} persons ={persons} removePerson={removePerson} />
     </div>
   )
 }
