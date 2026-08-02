@@ -34,6 +34,11 @@
       "name": "younes rekik",
       "number": "00000000000000",
       "id": "Ml7YCvXMr5E"
+    },
+    {
+      "name": "test",
+      "number": "1234568",
+      "id": "ToxhThu4fGw"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
