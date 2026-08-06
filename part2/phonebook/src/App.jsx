@@ -61,7 +61,7 @@ const App = () => {
   const  [newName, setNewName] = useState('')
   const  [newNumber, setNewNumber] = useState('')
   const  [searchValue, setSearchValue] = useState('')
-  const  [notificationMessage, setNotificationMessage] = useState(null)
+  const  [notification, setNotification] = useState({message: null, type: null})
 
   const handleNewNameChange = (event) => {
     setNewName(event.target.value)
@@ -86,13 +86,19 @@ const App = () => {
           .update(oldPerson.id, {...oldPerson, number: newNumber})
           .then(data =>{
           setPersons(persons.map(person => person.id === oldPerson.id ?{...person,number: newNumber} :person))
-          setNotificationMessage(`Changed ${newName}'s Number`)
+          setNotification({message:`Changed ${newName}'s Number`,type: 'success'})
           setTimeout(() => {
-            setNotificationMessage(null)
+            setNotification({message: null, type: null})
           }, 5000);
           setNewName('')
           setNewNumber('')
           console.log(persons)
+        })
+        .catch(error=>{
+          setNotification({message: `Information of ${newName} has already been removed from server`, type: 'error'})
+          setTimeout(() => {
+            setNotification({message: null, type: null})
+          }, 5000);
         })
       }
     }else{
@@ -100,14 +106,15 @@ const App = () => {
         .create({name:newName,number:newNumber})
         .then(data =>{
           setPersons(persons.concat(data))
-          setNotificationMessage(`Added ${newName}`)
+          setNotification({message: `Added ${newName}`, type: 'success'})
           setTimeout(() => {
-            setNotificationMessage(null)
+            setNotification({message: null, type: null})
           }, 5000);
           setNewName('')
           setNewNumber('')
           console.log(persons)
         })
+        
     }
     // setPersons(persons.concat({name:newName,number:newNumber}))
   }
@@ -127,8 +134,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={notificationMessage}/>
-
+      <Notification message={notification.message} type={notification.type}/>
+ 
       <Filter value={searchValue} onChange={handleSearchValueChange} />
 
       <h3>add a new</h3>
