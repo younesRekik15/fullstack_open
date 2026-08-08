@@ -9,14 +9,22 @@ const SearchBarForm = ({value, onChange}) => {
   )
 }
 
-const DisplaySection = ({countries}) => {
+const DisplaySection = ({countries, showCountry}) => {
   if(countries){
     if(countries.length>10){
       return(<p>Too many matches, specify another filter</p>)
     }else if(countries.length>1){
       return(
         <>
-          {countries.map(country => <p key={country.name.common}>{country.name.common}</p>)}
+          {countries.map(country =>{ 
+            return(
+              <p key={country.name.common}>
+                {country.name.common}
+                <button onClick={ ()=>{showCountry(country)} }>Show</button>
+              </p>
+            )
+            }
+          )}
         </>
       )
     }else if(countries.length === 1){
@@ -55,6 +63,11 @@ const App = () => {
 
   }
 
+  const showCountry = (country) => {
+    setSearchValue(country.name.common)
+    setMatchedCountries([country])
+  }
+
   useEffect(() => {
     axios
       .get('https://studies.cs.helsinki.fi/restcountries/api/all')
@@ -69,7 +82,7 @@ const App = () => {
             value={searchValue}
             onChange={handleSearchValueChange}
           />
-          {searchValue === ''?'':<DisplaySection countries={matchedCountries}/>}
+          {searchValue === ''?'':<DisplaySection countries={matchedCountries} showCountry={showCountry}/>}
         </>
       )
     }else{
